@@ -29,4 +29,14 @@ class ExpressionWriter {
             else -> ")"
         }
     }
+
+    private fun prepareCalculation(): String {
+        val newExpression = expression.dropLastWhile {
+            it in "$operationSymbol(."
+        }
+        if(newExpression.isEmpty()) {
+            return "0"
+        }
+        return newExpression
+    }
 }
