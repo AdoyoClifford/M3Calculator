@@ -17,10 +17,16 @@ class ExpressionParser(
                     )
                 }
                 curChar.isDigit() -> {
-                    i = par
+                    i = parseNumber(i, result)
+                    continue
+                }
+                curChar in "()" -> {
+                    parseParenthesis(curChar, result)
                 }
             }
+            i++
         }
+        return result
     }
 
     private fun parseNumber(startingIndex: Int, result: MutableList<ExpressionPart>): Int {
@@ -33,6 +39,18 @@ class ExpressionParser(
         }
         result.add(ExpressionPart.Number(numberAsString.toDouble()))
         return i
+    }
+
+    private fun parseParenthesis(curChar: Char, result: MutableList<ExpressionPart>) {
+        result.add(
+            ExpressionPart.Parenthesis(
+                type = when(curChar) {
+                    '(' -> ParenthesisType.Opening
+                    ')' -> ParenthesisType.Closing
+                    else -> throw IllegalArgumentException("Invalid Parenthesis type")
+                }
+            )
+        )
     }
 
 }
