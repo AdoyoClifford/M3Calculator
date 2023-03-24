@@ -5,11 +5,10 @@ class ExpressionParser(
 ) {
     fun parse(): List<ExpressionPart> {
         val result = mutableListOf<ExpressionPart>()
-
         var i = 0
+
         while (i < calculation.length) {
             val curChar = calculation[i]
-
             when {
                 curChar in operationSymbol -> {
                     result.add(
